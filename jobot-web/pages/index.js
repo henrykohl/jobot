@@ -22,7 +22,7 @@ export default function Home() {
   // console.log("apiKey:",apiKey)
   const API_URL = "https://api.openai.com/v1/chat/completions";
   
-  const [botMessage, setBotMessage] = useState("");
+  // const [botMessage, setBotMessage] = useState(""); //沒用到？
 
   // 初始
   // const [messageHistory, setMessageHistory] = useState([
