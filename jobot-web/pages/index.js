@@ -15,6 +15,7 @@
 import { useState } from "react";
 import ReactMarkdown from 'react-markdown'
 import Head from "next/head";
+import { createParser } from "eventsource-parser";
 
 const SYSTEM_MESSAGE = "You are Jobot, a helpful and verstaile AI developed by Jovian using state-of-the-art ML models. and APIs."
 
@@ -46,52 +47,120 @@ export default function Home() {
   //   console.log('button clicked');
   // }
 
-  async function sendRequest(){
-    // update the message history
-    const newMessage = {role: "user", content: userMessage};
-    // 初始
-    // const newMessageHistory = [...messages,newMessage]
-    // 重新命名後
-    const newMessages = [...messages,newMessage]
+  // async function sendRequest(){
+  //   // update the message history
+  //   const newMessage = {role: "user", content: userMessage};
+  //   // 初始
+  //   // const newMessageHistory = [...messages,newMessage]
+  //   // 重新命名後
+  //   const newMessages = [...messages,newMessage]
 
-    setMessages(newMessages);
+  //   setMessages(newMessages);
+  //   setUserMessage("");
+
+  //   const response = await fetch(API_URL, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + apiKey,
+  //     },
+  //     body: JSON.stringify({
+  //       "model": "gpt-3.5-turbo",
+  //       // "messages": [
+  //       //   // {"role": "system", "content": SYSTEM_MESSAGE}, // 移至 userMessage
+  //       //   // {"role": "user", "content": "Hello!"}
+  //       //   // {"role": "user", "content": "Hello, please introduce yourself!"}
+  //       //   // {"role": "user", "content": "What is JavaScript?"} // 移至 userMessage
+  //       // ]
+  //       "messages": newMessages
+  //     }),    
+  //   });
+    
+  //   const responseJson = await response.json();
+
+  //   // console.log("responseJson", responseJson); // 測試用
+
+  //   const newBotMessage = responseJson.choices[0].message;
+
+  //   const newMessages2  = [...newMessages, newBotMessage];
+
+  //   setMessages(newMessages2);
+
+  //   // setBotMessage(responseJson.choices[0].message.content);
+
+  //   // console.log('botMessage', botMessage); ## 測試用
+
+
+  // }
+  
+  const sendRequest = async () => {
+    const updatedMessages = [
+      ...messages,
+      {
+        role: "user",
+        content: userMessage,
+      },
+    ];
+
+    setMessages(updatedMessages);
     setUserMessage("");
 
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey,
-      },
-      body: JSON.stringify({
-        "model": "gpt-3.5-turbo",
-        // "messages": [
-        //   // {"role": "system", "content": SYSTEM_MESSAGE}, // 移至 userMessage
-        //   // {"role": "user", "content": "Hello!"}
-        //   // {"role": "user", "content": "Hello, please introduce yourself!"}
-        //   // {"role": "user", "content": "What is JavaScript?"} // 移至 userMessage
-        // ]
-        "messages": newMessages
-      }),    
-    });
-    
-    const responseJson = await response.json();
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: updatedMessages,
+          stream: true,
+        }),
+      });
 
-    // console.log("responseJson", responseJson); // 測試用
+      const reader = response.body.getReader();
 
-    const newBotMessage = responseJson.choices[0].message;
+      let newMessage = "";
+      const parser = createParser((event) => {
+        if (event.type === "event") {
+          const data = event.data;
+          if (data === "[DONE]") {
+            return;
+          }
+          const json = JSON.parse(event.data);
+          const content = json.choices[0].delta.content;
 
-    const newMessages2  = [...newMessages, newBotMessage];
+          if (!content) {
+            return;
+          }
 
-    setMessages(newMessages2);
+          newMessage += content;
 
-    // setBotMessage(responseJson.choices[0].message.content);
+          const updatedMessages2 = [
+            ...updatedMessages,
+            { role: "assistant", content: newMessage },
+          ];
 
-    // console.log('botMessage', botMessage); ## 測試用
+          setMessages(updatedMessages2);
+        } else {
+          return "";
+        }
+      });
 
+      // eslint-disable-next-line
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const text = new TextDecoder().decode(value);
+        parser.feed(text);
+      }
+    } catch (error) {
+      console.error("error");
+      window.alert("Error:" + error.message);
+    }
+  };
 
-}
-  
   return (
     <>
       <Head>
