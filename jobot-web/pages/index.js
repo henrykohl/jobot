@@ -43,6 +43,8 @@ export default function Home() {
     const newBotMessage = responseJson.choices[0].message;
 
     const newMessages2 = [...newMessages, newBotMessage];
+
+    setMessages(newMessages2);
   }
 
   return (
