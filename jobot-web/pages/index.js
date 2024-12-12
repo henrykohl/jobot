@@ -8,13 +8,13 @@ const SYSTEM_MESSAGE =
 
 export default function Home() {
   const [apiKey, setApiKey] = useState("");
-  const [botMessage, setBotMessage] = useState("");
-  const [userMessage, setUserMessage] = useState("");
 
-  function handleTyping(e) {
-    console.log("typing:", e.target.value); // 測試用
-    setUserMessage(e.target.value);
-  }
+  const [messageHistory, setMessageHistory] = useState([
+    { role: "system", content: SYSTEM_MESSAGE },
+    { role: "user", content: "What is JavaScript?" },
+  ]);
+
+  const [userMessage, setUserMessage] = useState("");
 
   const API_URL = "https://api.openai.com/v1/chat/completions";
 
@@ -36,8 +36,6 @@ export default function Home() {
     });
 
     const responseJson = await response.json();
-
-    setBotMessage(responseJson.choices[0].message.content);
   }
 
   return (
@@ -58,15 +56,21 @@ export default function Home() {
 
       {/* Message History */}
       <div className="flex-1">
-        <div className="mx-auto w-full max-w-screen-md">Message History</div>
+        <div className="mx-auto w-full max-w-screen-md">
+          {messageHistory.map((message, idx) => (
+            <div key={idx} className="mt-3">
+              <div className="font-bold">{message.role}</div>
+              <div className="text-lg">{message.content}</div>
+            </div>
+          ))}
+        </div>
       </div>
       {/* Message Input Box */}
       <div>
         <div className="mx-auto w-full max-w-screen-md flex px-4 pb-4">
           <textarea
             value={userMessage}
-            onChange={handleTyping}
-            // onChange={(e) => setUserMessage(e.target.value)} // 取代 handleTyping
+            onChange={(e) => setUserMessage(e.target.value)} // 取代 handleTyping
             className="border rounded-md text-lg p-1 flex-1"
             rows={1}
           />
