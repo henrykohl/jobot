@@ -74,10 +74,7 @@ export default function Home() {
             className="border rounded-md text-lg p-1 flex-1"
             rows={1}
           />
-          <button
-            onClick={sendRequest}
-            className="bg-blue-500 hover:bg-blue-600 border rounded-md text-white text-lg w-20 p-1 ml-2"
-          >
+          <button className="bg-blue-500 hover:bg-blue-600 border rounded-md text-white text-lg w-20 p-1 ml-2">
             Send
           </button>
         </div>
