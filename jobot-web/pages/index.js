@@ -11,7 +11,6 @@ export default function Home() {
 
   const [messageHistory, setMessageHistory] = useState([
     { role: "system", content: SYSTEM_MESSAGE },
-    { role: "user", content: "What is JavaScript?" },
   ]);
 
   const [userMessage, setUserMessage] = useState("");
@@ -19,23 +18,31 @@ export default function Home() {
   const API_URL = "https://api.openai.com/v1/chat/completions";
 
   async function sendRequest() {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + apiKey,
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: SYSTEM_MESSAGE },
-          // {"role": "user", "content": "Hello, please introduce yourself!"}
-          { role: "user", content: "What is JavaScript?" },
-        ],
-      }),
-    });
+    // update the message history
+    const newMessage = { role: "user", content: userMessage };
 
-    const responseJson = await response.json();
+    const newMessageHistory = [...messageHistory, newMessage];
+
+    setMessageHistory(newMessageHistory);
+    setUserMessage("");
+
+    // const response = await fetch(API_URL, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: "Bearer " + apiKey,
+    //   },
+    //   body: JSON.stringify({
+    //     model: "gpt-3.5-turbo",
+    //     messages: [
+    //       { role: "system", content: SYSTEM_MESSAGE },
+    //       // {"role": "user", "content": "Hello, please introduce yourself!"}
+    //       { role: "user", content: "What is JavaScript?" },
+    //     ],
+    //   }),
+    // });
+
+    // const responseJson = await response.json();
   }
 
   return (
