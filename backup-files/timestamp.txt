@@ -9,3 +9,6 @@ please teach
 
 v2-3 1:14:35
 how are you doing today? (開啟開發模式)
+
+v2-4 1:16:32
+How are you doing today? (不用開啟開發模式)
