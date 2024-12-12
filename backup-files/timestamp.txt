@@ -12,3 +12,6 @@ how are you doing today? (開啟開發模式)
 
 v2-4 1:16:32
 How are you doing today? (不用開啟開發模式)
+
+v2-5 1:18:00
+Hey there, who are you? 
