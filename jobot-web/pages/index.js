@@ -58,6 +58,7 @@ export default function Home() {
           try {
             data = JSON.parse(message);
             const { text } = data.choices[0];
+            newMessage += text;
             if (text === "<|im_end|>" || text === "<|im_sep|>") {
               return;
             }
