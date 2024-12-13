@@ -46,36 +46,58 @@ export default function Home() {
       const reader = response.body.getReader();
 
       let newMessage = "";
+
       const parser = createParser((event) => {
-        console.log("~~", event);
         if (event.type === "event") {
-          const data = event.data;
-          if (data === "[DONE]") {
+          const message = event.data;
+          if (message === "[DONE]") {
+            // chatgpt api streaming 結束時的 EOF
             return;
           }
-          const json = JSON.parse(event.data);
-          const content = json.choices[0].delta.content;
-          console.log(">>", content);
-          if (!content) {
-            return;
-          }
-
-          newMessage += content;
-
-          const updatedMessages2 = [
-            ...updatedMessages,
-            { role: "assistant", content: newMessage },
-          ];
-
-          setMessages(updatedMessages2);
-        } else {
-          return "";
+          let data;
+          try {
+            data = JSON.parse(message);
+            const { text } = data.choices[0];
+            if (text === "<|im_end|>" || text === "<|im_sep|>") {
+              return;
+            }
+            // text is the streaming API response chunk
+          } catch (err) {}
         }
       });
 
+      // const parser = createParser((event) => {
+      //   console.log("~~", event);
+      //   if (event.type === "event") {
+      //     const data = event.data;
+      //     if (data === "[DONE]") {
+      //       return;
+      //     }
+      //     const json = JSON.parse(event.data);
+      //     const content = json.choices[0].delta.content;
+      //     console.log(">>", content);
+      //     if (!content) {
+      //       return;
+      //     }
+
+      //     newMessage += content;
+
+      //     const updatedMessages2 = [
+      //       ...updatedMessages,
+      //       { role: "assistant", content: newMessage },
+      //     ];
+
+      //     setMessages(updatedMessages2);
+      //   } else {
+      //     return "";
+      //   }
+      // });
+
       // eslint-disable-next-line
       while (true) {
+        console.log("1>>");
         const { done, value } = await reader.read();
+        console.log("2>>", value);
         if (done) break;
         const text = new TextDecoder().decode(value);
         parser.feed(text);
