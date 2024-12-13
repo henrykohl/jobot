@@ -28,7 +28,7 @@ export default function Home() {
 
     setMessages(updatedMessages);
     setUserMessage("");
-
+    console.log(">>", messages);
     try {
       const response = await fetch(API_URL, {
         method: "POST",
