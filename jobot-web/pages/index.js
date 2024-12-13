@@ -56,52 +56,38 @@ export default function Home() {
 
       let newMessage = "";
 
+      const parser = createParser((e) => {
+        console.log("R:");
+
+        if (e.type !== "event") return;
+      });
+
       // const parser = createParser((event) => {
+      //   console.log("~~", event);
       //   if (event.type === "event") {
-      //     const message = event.data;
-      //     if (message === "[DONE]") {
-      //       // chatgpt api streaming 結束時的 EOF
+      //     const data = event.data;
+      //     if (data === "[DONE]") {
       //       return;
       //     }
-      //     let data;
-      //     try {
-      //       data = JSON.parse(message);
-      //       const { text } = data.choices[0];
-      //       // newMessage += text;
-      //       if (text === "<|im_end|>" || text === "<|im_sep|>") {
-      //         return;
-      //       }
-      //       // text is the streaming API response chunk
-      //     } catch (err) {}
+      //     const json = JSON.parse(event.data);
+      //     const content = json.choices[0].delta.content;
+      //     console.log(">>", content);
+      //     if (!content) {
+      //       return;
+      //     }
+
+      //     newMessage += content;
+
+      //     const updatedMessages2 = [
+      //       ...updatedMessages,
+      //       { role: "assistant", content: newMessage },
+      //     ];
+
+      //     setMessages(updatedMessages2);
+      //   } else {
+      //     return "";
       //   }
       // });
-
-      const parser = createParser((event) => {
-        console.log("~~", event);
-        if (event.type === "event") {
-          const data = event.data;
-          if (data === "[DONE]") {
-            return;
-          }
-          const json = JSON.parse(event.data);
-          const content = json.choices[0].delta.content;
-          console.log(">>", content);
-          if (!content) {
-            return;
-          }
-
-          newMessage += content;
-
-          const updatedMessages2 = [
-            ...updatedMessages,
-            { role: "assistant", content: newMessage },
-          ];
-
-          setMessages(updatedMessages2);
-        } else {
-          return "";
-        }
-      });
 
       // eslint-disable-next-line
       while (true) {
@@ -111,7 +97,7 @@ export default function Home() {
         if (done) break;
         const text = new TextDecoder().decode(value);
         console.log("text=", text);
-        parser.feed(text);
+        parser.feed();
       }
     } catch (error) {
       console.error("error");
