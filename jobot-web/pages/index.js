@@ -45,7 +45,7 @@ export default function Home() {
 
       const reader = response.body.getReader();
 
-      let newMessage = "";
+      // let newMessage = "";
 
       const parser = createParser((event) => {
         if (event.type === "event") {
@@ -58,7 +58,7 @@ export default function Home() {
           try {
             data = JSON.parse(message);
             const { text } = data.choices[0];
-            newMessage += text;
+            // newMessage += text;
             if (text === "<|im_end|>" || text === "<|im_sep|>") {
               return;
             }
