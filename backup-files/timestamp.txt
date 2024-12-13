@@ -1,4 +1,4 @@
-index_F : 最終所有學習版（包含v0~final） 
+index_F : 最終所有學習版（包含v0~final + stream） 
 ------------------------------
 
 v2-0 1:05:11
@@ -27,3 +27,5 @@ Teach me the basics of JavaScript.
 v2-7 1:25:00 (added margin: 找出 className="mt-3" 改成 className="my-3")
 
 final 1:29:55 (add head)
+
+stream (Bonus: Streaming the Message)
