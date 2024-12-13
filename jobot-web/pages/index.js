@@ -28,7 +28,7 @@ export default function Home() {
 
     setMessages(updatedMessages);
     setUserMessage("");
-    console.log(">>", messages);
+
     try {
       const response = await fetch(API_URL, {
         method: "POST",
@@ -47,6 +47,7 @@ export default function Home() {
 
       let newMessage = "";
       const parser = createParser((event) => {
+        console.log("~~", event);
         if (event.type === "event") {
           const data = event.data;
           if (data === "[DONE]") {
@@ -54,7 +55,7 @@ export default function Home() {
           }
           const json = JSON.parse(event.data);
           const content = json.choices[0].delta.content;
-
+          console.log(">>", content);
           if (!content) {
             return;
           }
