@@ -54,7 +54,7 @@ export default function Home() {
 
       const reader = response.body.getReader();
 
-      let newMessage = "";
+      // let newMessage = "";
 
       const parser = createParser((e) => {
         console.log("R:");
