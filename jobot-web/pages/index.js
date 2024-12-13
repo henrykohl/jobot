@@ -96,11 +96,12 @@ export default function Home() {
 
       // eslint-disable-next-line
       while (true) {
-        console.log("1>>");
+        // console.log("1>>");
         const { done, value } = await reader.read();
-        console.log("2>>", value);
+        console.log("2>>", done);
         if (done) break;
         const text = new TextDecoder().decode(value);
+        console.log("text=", text);
         parser.feed(text);
       }
     } catch (error) {
