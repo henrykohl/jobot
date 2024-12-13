@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Head from "next/head";
-// import { createParser } from "eventsource-parser";
+import { createParser } from "eventsource-parser";
 
 const SYSTEM_MESSAGE =
   "You are Jobot, a helpful and verstaile AI developed by Jovian using state-of-the-art ML models. and APIs.";
