@@ -57,8 +57,6 @@ export default function Home() {
       // let newMessage = "";
 
       const parser = createParser((e) => {
-        console.log("R:");
-
         if (e.type !== "event") return;
       });
 
