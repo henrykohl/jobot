@@ -162,7 +162,7 @@
 //   );
 // }
 
-const { createParser } = require("eventsource-parser");
+import { createParser } from "eventsource-parser";
 
 const parser = createParser((event) => {
   if (event.type === "event") {
