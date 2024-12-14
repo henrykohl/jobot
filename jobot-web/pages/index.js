@@ -162,14 +162,17 @@
 //   );
 // }
 
+// import { useState } from "react";
 import { createParser } from "eventsource-parser";
 
-const parser = createParser((event) => {
-  if (event.type === "event") {
-    console.log("Received event:", event);
-  }
-});
+export default function Home() {
+  const parser = createParser((event) => {
+    if (event.type === "event") {
+      console.log("Received event:", event);
+    }
+  });
 
-console.log("HERE");
-const sseData = `data: Hello\n\n`;
-parser.feed(sseData);
+  console.log("HERE");
+  const sseData = `data: Hello\n\n`;
+  parser.feed(sseData);
+}
