@@ -175,4 +175,6 @@ export default function Home() {
   console.log("HERE");
   const sseData = `data: Hello\n\n`;
   parser.feed(sseData);
+
+  return <div className="flex flex-col h-screen">TEST</div>;
 }
