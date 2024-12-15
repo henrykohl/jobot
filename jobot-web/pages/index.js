@@ -41,7 +41,7 @@ export default function Home() {
     const newMessages = [...messages, newMessage];
 
     setMessages(newMessages);
-    setUserMessage("");
+    // setUserMessage("");
 
     const response = await fetch(API_URL, {
       method: "POST",
@@ -206,10 +206,7 @@ export default function Home() {
               className="border rounded p-1"
               placeholder="Paste API key here"
               // value={apiKey} // 此範例中，可以不需要
-              onChange={(e) => {
-                console.log(">", e);
-                setApiKey(e.target.value);
-              }}
+              onChange={(e) => setApiKey(e.target.value)}
             />
           </div>
         </nav>
