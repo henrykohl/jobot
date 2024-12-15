@@ -34,77 +34,109 @@ export default function Home() {
 
   const API_URL = "https://api.openai.com/v1/chat/completions";
 
-  const sendRequest = async () => {
-    const updatedMessages = [
-      ...messages,
-      {
-        role: "user",
-        content: userMessage,
-      },
-    ];
+  async function sendRequest() {
+    // update the message history
+    const newMessage = { role: "user", content: userMessage };
 
-    setMessages(updatedMessages);
+    const newMessages = [...messages, newMessage];
+
+    setMessages(newMessages);
     setUserMessage("");
 
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + apiKey,
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: updatedMessages,
-          stream: true,
-        }),
-      });
+    console.log("key:", apiKey);
 
-      const reader = response.body.getReader();
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + apiKey,
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: newMessages,
+      }),
+    });
 
-      let newMessage = "";
+    const responseJson = await response.json();
 
-      const parser = createParser((event) => {
-        console.log("~~", event);
-        if (event.type === "event") {
-          const data = event.data;
-          if (data === "[DONE]") {
-            return;
-          }
-          const json = JSON.parse(event.data);
-          const content = json.choices[0].delta.content;
-          console.log(">>", content);
-          if (!content) {
-            return;
-          }
+    const newBotMessage = responseJson.choices[0].message;
 
-          newMessage += content;
+    const newMessages2 = [...newMessages, newBotMessage];
 
-          const updatedMessages2 = [
-            ...updatedMessages,
-            { role: "assistant", content: newMessage },
-          ];
+    setMessages(newMessages2);
+  }
 
-          setMessages(updatedMessages2);
-        } else {
-          return "";
-        }
-      });
+  // const sendRequest = async () => {
+  //   const updatedMessages = [
+  //     ...messages,
+  //     {
+  //       role: "user",
+  //       content: userMessage,
+  //     },
+  //   ];
 
-      // eslint-disable-next-line
-      while (true) {
-        const { done, value } = await reader.read();
+  //   setMessages(updatedMessages);
+  //   setUserMessage("");
 
-        if (done) break;
-        const text = new TextDecoder().decode(value);
+  //   try {
+  //     const response = await fetch(API_URL, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + apiKey,
+  //       },
+  //       body: JSON.stringify({
+  //         model: "gpt-3.5-turbo",
+  //         messages: updatedMessages,
+  //         stream: true,
+  //       }),
+  //     });
 
-        parser.feed(text);
-      }
-    } catch (error) {
-      console.error("error");
-      window.alert("Error:" + error.message);
-    }
-  };
+  //     const reader = response.body.getReader();
+
+  //     let newMessage = "";
+
+  //     const parser = createParser((event) => {
+  //       console.log("~~", event);
+  //       if (event.type === "event") {
+  //         const data = event.data;
+  //         if (data === "[DONE]") {
+  //           return;
+  //         }
+  //         const json = JSON.parse(event.data);
+  //         const content = json.choices[0].delta.content;
+  //         console.log(">>", content);
+  //         if (!content) {
+  //           return;
+  //         }
+
+  //         newMessage += content;
+
+  //         const updatedMessages2 = [
+  //           ...updatedMessages,
+  //           { role: "assistant", content: newMessage },
+  //         ];
+
+  //         setMessages(updatedMessages2);
+  //       } else {
+  //         return "";
+  //       }
+  //     });
+
+  //     // eslint-disable-next-line
+  //     while (true) {
+  //       const { done, value } = await reader.read();
+
+  //       if (done) break;
+  //       const text = new TextDecoder().decode(value);
+
+  //       parser.feed(text);
+  //     }
+  //   } catch (error) {
+  //     console.error("error");
+  //     window.alert("Error:" + error.message);
+  //   }
+  // };
 
   // ////////////////////////////////////////////////////////////////////
   // const API_KEY = "YOUR_API_KEY";
