@@ -41,7 +41,9 @@ export default function Home() {
     const newMessages = [...messages, newMessage];
 
     setMessages(newMessages);
-    // setUserMessage("");
+    setUserMessage(""); // 功用：按下Send後，清空輸入格
+
+    console.log("new MSG:", newMessages);
 
     const response = await fetch(API_URL, {
       method: "POST",
@@ -144,55 +146,55 @@ export default function Home() {
   // const stopBtn = document.getElementById("stopBtn");
   // const resultText = document.getElementById("resultText");
 
-  // let controller = null; // Store the AbortController instance
+  let controller = null; // Store the AbortController instance
 
-  // const [promptInput, setPromptInput] = useState("");
-  // const [isDisable, setIsDisable] = useState(true);
+  const [promptInput, setPromptInput] = useState("");
+  const [isDisable, setIsDisable] = useState(true);
 
-  // const generate = async () => {
-  //   // Alert the user if no prompt value
-  //   if (!promptInput) {
-  //     alert("Please enter a prompt.");
-  //     return;
-  //   }
+  const generate = async () => {
+    // Alert the user if no prompt value
+    if (!promptInput) {
+      alert("Please enter a prompt.");
+      return;
+    }
 
-  //   // Create a new AbortController instance
-  //   controller = new AbortController();
-  //   const signal = controller.signal;
+    // Create a new AbortController instance
+    controller = new AbortController();
+    const signal = controller.signal;
 
-  //   try {
-  //     // Fetch the response from the OpenAI API with the signal from AbortController
-  //     const response = await fetch(API_URL, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${apiKey}`,
-  //       },
-  //       body: JSON.stringify({
-  //         model: "gpt-3.5-turbo",
-  //         messages: [{ role: "user", content: promptInput.value }],
-  //         max_tokens: 100,
-  //       }),
-  //       signal, // Pass the signal to the fetch request
-  //     });
+    try {
+      // Fetch the response from the OpenAI API with the signal from AbortController
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: promptInput.value }],
+          max_tokens: 100,
+        }),
+        signal, // Pass the signal to the fetch request
+      });
 
-  //     const data = await response.json();
-  //     resultText.innerText = data.choices[0].message.content;
-  //   } catch (error) {
-  //     // Handle fetch request errors
-  //     if (signal.aborted) {
-  //       resultText.innerText = "Request aborted.";
-  //     } else {
-  //       console.error("Error:", error);
-  //       resultText.innerText = "Error occurred while generating.";
-  //     }
-  //   } finally {
-  //     // Enable the generate button and disable the stop button
-  //     generateBtn.disabled = false;
-  //     stopBtn.disabled = true;
-  //     controller = null; // Reset the AbortController instance
-  //   }
-  // };
+      const data = await response.json();
+      resultText.innerText = data.choices[0].message.content;
+    } catch (error) {
+      // Handle fetch request errors
+      if (signal.aborted) {
+        resultText.innerText = "Request aborted.";
+      } else {
+        console.error("Error:", error);
+        resultText.innerText = "Error occurred while generating.";
+      }
+    } finally {
+      // Enable the generate button and disable the stop button
+      generateBtn.disabled = false;
+      stopBtn.disabled = true;
+      controller = null; // Reset the AbortController instance
+    }
+  };
 
   return (
     <>
@@ -247,7 +249,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* <div class="lg:w-1/2 2xl:w-1/3 p-8 rounded-md bg-gray-100">
+      <div class="lg:w-1/2 2xl:w-1/3 p-8 rounded-md bg-gray-100">
         <h1 class="text-3xl font-bold mb-6">
           Streaming OpenAI API Completions in JavaScript
         </h1>
@@ -264,7 +266,7 @@ export default function Home() {
                     <ReactMarkdown>{message.content}</ReactMarkdown>
                   </div>
                 </div>
-            ))}
+              ))}
           </p>
           <p id="resultText" class="whitespace-pre-line"></p>
         </div>
@@ -292,7 +294,7 @@ export default function Home() {
             Stop
           </button>
         </div>
-      </div> */}
+      </div>
     </>
   );
 }
