@@ -120,7 +120,7 @@ export default function Home() {
               type="password"
               className="border rounded p-1"
               placeholder="Paste API key here"
-              value={apiKey}
+              // value={apiKey}
               onChange={(e) => {
                 console.log(">", e);
                 setApiKey(e.target.value);
