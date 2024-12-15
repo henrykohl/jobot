@@ -16,7 +16,7 @@
 // }
 
 import { useState } from "react";
-// import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
 // import Head from "next/head";
 import { createParser } from "eventsource-parser";
 
@@ -130,7 +130,7 @@ export default function Home() {
         </nav>
 
         {/* Message History */}
-        {/* <div className="flex-1  overflow-y-scroll">
+        <div className="flex-1  overflow-y-scroll">
           <div className="mx-auto w-full max-w-screen-md">
             {messages
               .filter((message) => message.role !== "system")
@@ -145,7 +145,7 @@ export default function Home() {
                 </div>
               ))}
           </div>
-        </div> */}
+        </div>
         {/* Message Input Box */}
         <div>
           <div className="mx-auto w-full max-w-screen-md flex px-4 pb-4">
