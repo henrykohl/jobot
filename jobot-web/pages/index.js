@@ -141,11 +141,12 @@ export default function Home() {
   // ////////////////////////////////////////////////////////////////////
   // const API_KEY = "YOUR_API_KEY";
 
-  const promptInput = document.getElementById("promptInput");
+  // const promptInput = document.getElementById("promptInput");
   // const generateBtn = document.getElementById("generateBtn");
   // const stopBtn = document.getElementById("stopBtn");
   // const resultText = document.getElementById("resultText");
 
+  const [promptInput, setPromptInput] = useState("");
   console.log("prompt:", promptInput.value);
 
   return (
@@ -217,6 +218,8 @@ export default function Home() {
           id="promptInput"
           class="w-full px-4 py-2 rounded-md bg-gray-200 placeholder-gray-500 focus:outline-none mt-4"
           placeholder="Enter prompt..."
+          value={promptInput}
+          onChange={(e) => setPromptInput(e.target.value)}
         />
         <div class="flex justify-center mt-4">
           <button
