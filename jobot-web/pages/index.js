@@ -106,6 +106,9 @@ export default function Home() {
     }
   };
 
+  // ////////////////////////////////////////////////////////////////////
+  // const API_KEY = "YOUR_API_KEY";
+
   return (
     <>
       <div className="flex flex-col h-screen">
@@ -118,7 +121,10 @@ export default function Home() {
               className="border rounded p-1"
               placeholder="Paste API key here"
               value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
+              onChange={(e) => {
+                console.log(">", e);
+                setApiKey(e.target.value);
+              }}
             />
           </div>
         </nav>
