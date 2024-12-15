@@ -141,6 +141,13 @@ export default function Home() {
   // ////////////////////////////////////////////////////////////////////
   // const API_KEY = "YOUR_API_KEY";
 
+  const promptInput = document.getElementById("promptInput");
+  // const generateBtn = document.getElementById("generateBtn");
+  // const stopBtn = document.getElementById("stopBtn");
+  // const resultText = document.getElementById("resultText");
+
+  console.log("prompt:", promptInput.value);
+
   return (
     <>
       <div className="flex flex-col h-screen">
@@ -152,7 +159,7 @@ export default function Home() {
               type="password"
               className="border rounded p-1"
               placeholder="Paste API key here"
-              // value={apiKey}
+              // value={apiKey} // 此範例中，可以不需要
               onChange={(e) => {
                 console.log(">", e);
                 setApiKey(e.target.value);
