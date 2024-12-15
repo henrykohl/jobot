@@ -149,13 +149,13 @@ export default function Home() {
   const [promptInput, setPromptInput] = useState("");
   console.log("prompt:", promptInput);
 
-  const generate = async () => {
-    // Alert the user if no prompt value
-    if (!promptInput.value) {
-      alert("Please enter a prompt.");
-      return;
-    }
-  };
+  // const generate = async () => {
+  //   // Alert the user if no prompt value
+  //   if (!promptInput.value) {
+  //     alert("Please enter a prompt.");
+  //     return;
+  //   }
+  // };
 
   return (
     <>
