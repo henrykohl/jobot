@@ -193,64 +193,62 @@ export default function Home() {
   };
 
   return (
-    <>
-      <div className="flex flex-col h-screen">
-        {/* Navigation Bar */}
-        <nav className="shadow px-4 py-2 flex flex-row justify-between items-center">
-          <div className="text-xl  font-bold">Job</div>
-          <div>
-            <input
-              type="password"
-              className="border rounded p-1"
-              placeholder="Paste API key here"
-              // value={apiKey} // 此範例中，可以不需要
-              onChange={(e) => setApiKey(e.target.value)}
-            />
-          </div>
-        </nav>
-
-        <div class="lg:w-1/2 2xl:w-1/3 p-8 rounded-md bg-gray-100">
-          <h1 class="text-3xl font-bold mb-6">
-            Streaming OpenAI API Completions in JavaScript
-          </h1>
-          <div id="resultContainer" class="mt-4 h-48 overflow-y-auto">
-            <p class="text-gray-500 text-sm mb-2">
-              {
-                <div className="text-lg prose">
-                  <ReactMarkdown>{res}</ReactMarkdown>
-                </div>
-              }
-            </p>
-            <p id="resultText" class="whitespace-pre-line"></p>
-          </div>
+    <div className="flex flex-col h-screen">
+      {/* Navigation Bar */}
+      <nav className="shadow px-4 py-2 flex flex-row justify-between items-center">
+        <div className="text-xl  font-bold">Job</div>
+        <div>
           <input
-            type="text"
-            id="promptInput"
-            class="w-full px-4 py-2 rounded-md bg-gray-200 placeholder-gray-500 focus:outline-none mt-4"
-            placeholder="Enter prompt..."
-            value={promptInput}
-            onChange={(e) => setPromptInput(e.target.value)}
+            type="password"
+            className="border rounded p-1"
+            placeholder="Paste API key here"
+            // value={apiKey} // 此範例中，可以不需要
+            onChange={(e) => setApiKey(e.target.value)}
           />
-          <div class="flex justify-center mt-4">
-            <button
-              id="generateBtn"
-              class="w-1/2 px-4 py-2 rounded-md bg-black text-white hover:bg-gray-900 focus:outline-none mr-2 disabled:opacity-75 disabled:cursor-not-allowed"
-              disabled={!isDisable}
-              onClick={generate}
-            >
-              Generate
-            </button>
-            <button
-              id="stopBtn"
-              disabled={isDisable}
-              class="w-1/2 px-4 py-2 rounded-md border border-gray-500 text-gray-500 hover:text-gray-700 hover:border-gray-700 focus:outline-none ml-2 disabled:opacity-75 disabled:cursor-not-allowed"
-              onClick={stop}
-            >
-              Stop
-            </button>
-          </div>
+        </div>
+      </nav>
+
+      <div class="lg:w-1/2 2xl:w-1/3 p-8 rounded-md bg-gray-100">
+        <h1 class="text-3xl font-bold mb-6">
+          Streaming OpenAI API Completions in JavaScript
+        </h1>
+        <div id="resultContainer" class="mt-4 h-48 overflow-y-auto">
+          <p class="text-gray-500 text-sm mb-2">
+            {
+              <div className="text-lg prose">
+                <ReactMarkdown>{res}</ReactMarkdown>
+              </div>
+            }
+          </p>
+          <p id="resultText" class="whitespace-pre-line"></p>
+        </div>
+        <input
+          type="text"
+          id="promptInput"
+          class="w-full px-4 py-2 rounded-md bg-gray-200 placeholder-gray-500 focus:outline-none mt-4"
+          placeholder="Enter prompt..."
+          value={promptInput}
+          onChange={(e) => setPromptInput(e.target.value)}
+        />
+        <div class="flex justify-center mt-4">
+          <button
+            id="generateBtn"
+            class="w-1/2 px-4 py-2 rounded-md bg-black text-white hover:bg-gray-900 focus:outline-none mr-2 disabled:opacity-75 disabled:cursor-not-allowed"
+            disabled={!isDisable}
+            onClick={generate}
+          >
+            Generate
+          </button>
+          <button
+            id="stopBtn"
+            disabled={isDisable}
+            class="w-1/2 px-4 py-2 rounded-md border border-gray-500 text-gray-500 hover:text-gray-700 hover:border-gray-700 focus:outline-none ml-2 disabled:opacity-75 disabled:cursor-not-allowed"
+            onClick={stop}
+          >
+            Stop
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
