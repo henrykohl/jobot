@@ -28,86 +28,6 @@ export default function Home() {
 
   const API_URL = "https://api.openai.com/v1/chat/completions";
 
-  // const sendRequest = async () => {
-  //   const updatedMessages = [
-  //     ...messages,
-  //     {
-  //       role: "user",
-  //       content: userMessage,
-  //     },
-  //   ];
-
-  //   setMessages(updatedMessages);
-  //   setUserMessage("");
-
-  //   try {
-  //     const response = await fetch(API_URL, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + apiKey,
-  //       },
-  //       body: JSON.stringify({
-  //         model: "gpt-3.5-turbo",
-  //         messages: updatedMessages,
-  //         stream: true,
-  //       }),
-  //     });
-
-  //     const reader = response.body.getReader();
-
-  //     let newMessage = "";
-
-  //     const parser = createParser((event) => {
-  //       console.log("~~", event);
-  //       if (event.type === "event") {
-  //         const data = event.data;
-  //         if (data === "[DONE]") {
-  //           return;
-  //         }
-  //         const json = JSON.parse(event.data);
-  //         const content = json.choices[0].delta.content;
-  //         console.log(">>", content);
-  //         if (!content) {
-  //           return;
-  //         }
-
-  //         newMessage += content;
-
-  //         const updatedMessages2 = [
-  //           ...updatedMessages,
-  //           { role: "assistant", content: newMessage },
-  //         ];
-
-  //         setMessages(updatedMessages2);
-  //       } else {
-  //         return "";
-  //       }
-  //     });
-
-  //     // eslint-disable-next-line
-  //     while (true) {
-  //       const { done, value } = await reader.read();
-
-  //       if (done) break;
-  //       const text = new TextDecoder().decode(value);
-
-  //       parser.feed(text);
-  //     }
-  //   } catch (error) {
-  //     console.error("error");
-  //     window.alert("Error:" + error.message);
-  //   }
-  // };
-
-  // ////////////////////////////////////////////////////////////////////
-  // const API_KEY = "YOUR_API_KEY";
-
-  // const promptInput = document.getElementById("promptInput");
-  // const generateBtn = document.getElementById("generateBtn");
-  // const stopBtn = document.getElementById("stopBtn");
-  // const resultText = document.getElementById("resultText");
-
   let controller = null; // Store the AbortController instance
 
   const [promptInput, setPromptInput] = useState("");
@@ -213,14 +133,11 @@ export default function Home() {
           Streaming OpenAI API Completions in JavaScript
         </h1>
         <div id="resultContainer" class="mt-4 h-48 overflow-y-auto">
-          <p class="text-gray-500 text-sm mb-2">
-            {
-              <div className="text-lg prose">
-                <ReactMarkdown>{res}</ReactMarkdown>
-              </div>
-            }
+          <p id="resultText" class="whitespace-pre-line">
+            <div className="text-lg prose">
+              <ReactMarkdown>{res}</ReactMarkdown>
+            </div>
           </p>
-          <p id="resultText" class="whitespace-pre-line"></p>
         </div>
         <input
           type="text"
