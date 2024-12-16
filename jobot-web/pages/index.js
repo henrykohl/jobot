@@ -41,7 +41,7 @@ export default function Home() {
     const newMessages = [...messages, newMessage];
 
     setMessages(newMessages);
-    setUserMessage(""); // 功用：按下Send後，清空輸入格
+    setUserMessage("");
 
     const response = await fetch(API_URL, {
       method: "POST",
@@ -51,7 +51,7 @@ export default function Home() {
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
-        messages: newMessages, // 不單是最近一次輸入，過去所有輸入與反餽都要被包含在 newMessages 中
+        messages: newMessages,
       }),
     });
 
