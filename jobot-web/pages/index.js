@@ -230,6 +230,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Jobot</title>
+      </Head>
       <div className="flex flex-col h-screen">
         {/* Navigation Bar */}
         <nav className="shadow px-4 py-2 flex flex-row justify-between items-center">
