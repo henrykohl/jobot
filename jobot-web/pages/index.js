@@ -132,14 +132,12 @@ export default function Home() {
         <h1 class="text-3xl font-bold mb-6">
           Streaming OpenAI API Completions in JavaScript
         </h1>
-        {/* <div id="resultContainer" class="mt-4 h-48 overflow-y-auto">
-          <p id="resultText" class="whitespace-pre-line">
-            <div className="text-lg prose">
-             
-            </div>
+        <div class="mt-4 h-48 overflow-y-auto">
+          <p class="whitespace-pre-line">
+            <div className="text-lg prose"></div>
           </p>
         </div>
-        <input
+        {/* <input
           type="text"
           id="promptInput"
           class="w-full px-4 py-2 rounded-md bg-gray-200 placeholder-gray-500 focus:outline-none mt-4"
