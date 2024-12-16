@@ -17,7 +17,7 @@
 
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
-// import Head from "next/head";
+import Head from "next/head";
 // import { createParser } from "eventsource-parser";
 
 const SYSTEM_MESSAGE =
