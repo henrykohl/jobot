@@ -16,12 +16,12 @@
 // }
 
 import { useState } from "react";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 // import Head from "next/head";
 // import { createParser } from "eventsource-parser";
 
-const SYSTEM_MESSAGE =
-  "You are Jobot, a helpful and verstaile AI developed by Jovian using state-of-the-art ML models. and APIs.";
+// const SYSTEM_MESSAGE =
+//   "You are Jobot, a helpful and verstaile AI developed by Jovian using state-of-the-art ML models. and APIs.";
 
 export default function Home() {
   const [apiKey, setApiKey] = useState("");
@@ -30,14 +30,14 @@ export default function Home() {
 
   // let controller = null; // Store the AbortController instance
 
-  // const [promptInput, setPromptInput] = useState("");
+  const [promptInput, setPromptInput] = useState("");
   // const [isDisable, setIsDisable] = useState(true);
 
   // const [msgs, setMsgs] = useState([
   //   { role: "system", content: SYSTEM_MESSAGE },
   // ]);
 
-  const [res, setRes] = useState("");
+  // const [res, setRes] = useState("");
 
   // const generate = async () => {
   //   // Alert the user if no prompt value
@@ -135,7 +135,7 @@ export default function Home() {
         <div id="resultContainer" class="mt-4 h-48 overflow-y-auto">
           <p id="resultText" class="whitespace-pre-line">
             <div className="text-lg prose">
-              <ReactMarkdown>{res}</ReactMarkdown>
+              {/* <ReactMarkdown>{res}</ReactMarkdown> */}
             </div>
           </p>
         </div>
