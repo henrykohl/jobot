@@ -129,10 +129,10 @@ export default function Home() {
       </nav>
 
       <div class="lg:w-1/2 2xl:w-1/3 p-8 rounded-md bg-gray-100">
-        {/* <h1 class="text-3xl font-bold mb-6">
+        <h1 class="text-3xl font-bold mb-6">
           Streaming OpenAI API Completions in JavaScript
         </h1>
-        <div id="resultContainer" class="mt-4 h-48 overflow-y-auto">
+        {/* <div id="resultContainer" class="mt-4 h-48 overflow-y-auto">
           <p id="resultText" class="whitespace-pre-line">
             <div className="text-lg prose">
              
