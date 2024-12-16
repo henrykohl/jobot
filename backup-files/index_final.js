@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Head from "next/head";
-// import { createParser } from "eventsource-parser";
+// import { createParser } from "eventsource-parser"; 用在 index_stream
 
 const SYSTEM_MESSAGE =
   "You are Jobot, a helpful and verstaile AI developed by Jovian using state-of-the-art ML models. and APIs.";
@@ -24,7 +24,7 @@ export default function Home() {
     const newMessages = [...messages, newMessage];
 
     setMessages(newMessages);
-    setUserMessage("");
+    setUserMessage(""); // 功用：按下Send後，清空輸入格
 
     const response = await fetch(API_URL, {
       method: "POST",
@@ -34,7 +34,7 @@ export default function Home() {
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
-        messages: newMessages,
+        messages: newMessages, // 不單是最近一次輸入，過去所有輸入與反餽都要被包含在 newMessages 中
       }),
     });
 
@@ -61,7 +61,7 @@ export default function Home() {
               type="password"
               className="border rounded p-1"
               placeholder="Paste API key here"
-              value={apiKey}
+              // value={apiKey} // 此範例中，可以不需要
               onChange={(e) => setApiKey(e.target.value)}
             />
           </div>
