@@ -132,10 +132,13 @@ export default function Home() {
         <h1 class="text-3xl font-bold mb-6">
           Streaming OpenAI API Completions in JavaScript
         </h1>
-        <div class="mt-4 h-48 overflow-y-auto">
-          <p>
-            <div>TEST</div>
-          </p>
+        <div id="resultContainer" class="mt-4 h-48 overflow-y-auto">
+          <p class="text-gray-500 text-sm mb-2">Generated Text</p>
+          <div id="resultText" class="whitespace-pre-line">
+            <div className="text-lg prose">
+              {/* <ReactMarkdown>{res}</ReactMarkdown> */}
+            </div>
+          </div>
         </div>
         {/* <input
           type="text"
