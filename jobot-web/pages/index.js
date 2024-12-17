@@ -1,24 +1,6 @@
-// import { useState } from "react";
-
-// export default function Home() {
-//   const parser = createParser((event) => {
-//     console.log(">", event);
-//     if (event.type === "event") {
-//       console.log("Received event:", event);
-//     }
-//   });
-
-//   console.log("HERE");
-//   const sseData = `data: Hello\n\n`;
-//   parser.feed(sseData);
-
-//   return <div className="flex flex-col h-screen">TEST</div>;
-// }
-
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Head from "next/head";
-// import { createParser } from "eventsource-parser";
 
 const SYSTEM_MESSAGE =
   "You are Jobot, a helpful and verstaile AI developed by Jovian using state-of-the-art ML models. and APIs.";
@@ -47,9 +29,9 @@ export default function Home() {
     }
 
     // Disable the generate button and enable the stop button
-    // generateBtn.disabled = true;
-    // stopBtn.disabled = false;
-    // resultText.innerText = "Generating...";
+    // generateBtn.disabled = true; (原方式)
+    // stopBtn.disabled = false; (原方式)
+    // resultText.innerText = "Generating..."; (原方式)
     setIsDisable(false);
     setRes("Generating...");
 
@@ -88,17 +70,17 @@ export default function Home() {
     } catch (error) {
       // Handle fetch request errors
       if (signal.aborted) {
-        // resultText.innerText = "Request aborted.";
+        // resultText.innerText = "Request aborted."; (原方式)
         setRes("Request aborted.");
       } else {
         console.error("Error:", error);
-        // resultText.innerText = "Error occurred while generating.";
+        // resultText.innerText = "Error occurred while generating."; (原方式)
         setRes("Error occurred while generating.");
       }
     } finally {
       // Enable the generate button and disable the stop button
-      // generateBtn.disabled = false;
-      // stopBtn.disabled = true;
+      // generateBtn.disabled = false; (原方式)
+      // stopBtn.disabled = true; (原方式)
       setIsDisable(true);
       controller = null; // Reset the AbortController instance
     }
@@ -126,7 +108,7 @@ export default function Home() {
               type="password"
               className="border rounded p-1"
               placeholder="Paste API key here"
-              value={apiKey} // 此範例中，可以不需要
+              value={apiKey} // 此例，可以不需要
               onChange={(e) => setApiKey(e.target.value)}
             />
           </div>
