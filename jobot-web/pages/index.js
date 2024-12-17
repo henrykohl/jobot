@@ -238,7 +238,7 @@ export default function Home() {
               id="generateBtn"
               class="w-1/2 px-4 py-2 rounded-md bg-black text-white hover:bg-gray-900 focus:outline-none mr-2 disabled:opacity-75 disabled:cursor-not-allowed"
               disabled={!isDisable}
-              onClick={generate2}
+              onClick={generate}
             >
               Generate
             </button>
@@ -254,7 +254,7 @@ export default function Home() {
           <div class="flex justify-center mt-4">
             <button
               class="w-1/2 px-4 py-2 rounded-md bg-black text-white hover:bg-gray-900 focus:outline-none mr-2 disabled:opacity-75 disabled:cursor-not-allowed"
-              onClick={generate}
+              onClick={generate2}
             >
               TEST
             </button>
