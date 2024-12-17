@@ -34,8 +34,9 @@ index_v2-7 1:25:00 (added margin: 找出 className="mt-3" 改成 className="my-3
 index_final 1:29:55 (add head)
 
 index_stream 1:35:25 (Bonus: Streaming the Message)
-
 ---------------------------------------------------------
-stream_output
-儲存了，使用 stream.js 運行，輸入 `Hey, how are you today?` 後，decoder.decode(value) 也就是 const chunk 的結果
+
+
+
+
 

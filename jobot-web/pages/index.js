@@ -66,7 +66,7 @@ export default function Home() {
       let msg_stream = "";
       setRes(msg_stream);
 
-      /* eslint-disable no-constant-condition */
+      /* eslint-disable no-constant-condition (必需要此行，否則會出現Unexpected constant condition)*/
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
