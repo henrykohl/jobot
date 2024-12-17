@@ -148,7 +148,9 @@ export default function Home() {
         }
         // Massage and parse the chunk of data
         const chunk = decoder.decode(value);
+        console.log("chunk > ", chunk)
         const lines = chunk.split("\n");
+        console.log("lines ~ ",lines)
         const parsedLines = lines
           .map((line) => line.replace(/^data: /, "").trim()) // Remove the "data: " prefix
           .filter((line) => line !== "" && line !== "[DONE]") // Remove empty lines and "[DONE]"
