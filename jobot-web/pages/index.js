@@ -128,20 +128,44 @@ export default function Home() {
           model: "gpt-3.5-turbo",
           messages: newMessages,
           max_tokens: 1000,
-          // stream: true, // For streaming responses
+          stream: true, // For streaming responses
         }),
         signal, // Pass the signal to the fetch request
       });
 
-      const data = await response.json();
+      // Read the response as a stream of data
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      // resultText.innerText = "";
+      let msg_stream = "";
+      setRes(msg_stream);
 
-      const newBotMessage = data.choices[0].message;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+        // Massage and parse the chunk of data
+        const chunk = decoder.decode(value);
+        const lines = chunk.split("\n");
+        const parsedLines = lines
+          .map((line) => line.replace(/^data: /, "").trim()) // Remove the "data: " prefix
+          .filter((line) => line !== "" && line !== "[DONE]") // Remove empty lines and "[DONE]"
+          .map((line) => JSON.parse(line)); // Parse the JSON string
 
-      const newMessages2 = [...newMessages, newBotMessage];
-
-      setMsgs(newMessages2);
-
-      setRes(newBotMessage.content);
+        for (const parsedLine of parsedLines) {
+          console.log(">>", parsedLine);
+          const { choices } = parsedLine;
+          const { delta } = choices[0];
+          const { content } = delta;
+          // Update the UI with the new content
+          if (content) {
+            // resultText.innerText += content;
+            msg_stream += content;
+            setRes(msg_stream);
+          }
+        }
+      }
     } catch (error) {
       // Handle fetch request errors
       if (signal.aborted) {
