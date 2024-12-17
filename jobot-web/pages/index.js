@@ -148,16 +148,13 @@ export default function Home() {
         }
         // Massage and parse the chunk of data
         const chunk = decoder.decode(value);
-        console.log("chunk > ", chunk)
-        const lines = chunk.split("\n");
-        console.log("lines ~ ",lines)
+        const lines = chunk.split("\n"); // 以行分割，lines 是 list 型態
         const parsedLines = lines
           .map((line) => line.replace(/^data: /, "").trim()) // Remove the "data: " prefix
           .filter((line) => line !== "" && line !== "[DONE]") // Remove empty lines and "[DONE]"
-          .map((line) => JSON.parse(line)); // Parse the JSON string
+          .map((line) => JSON.parse(line)); // Parse the JSON string (轉成 JSON 型態)
 
         for (const parsedLine of parsedLines) {
-          console.log(">>", parsedLine);
           const { choices } = parsedLine;
           const { delta } = choices[0];
           const { content } = delta;
@@ -169,6 +166,14 @@ export default function Home() {
           }
         }
       }
+
+      // const data = await response.json();
+
+      const newBotMessage = { role: "assistant", content: msg_stream };
+
+      const newMessages2 = [...newMessages, newBotMessage];
+
+      setMsgs(newMessages2);
     } catch (error) {
       // Handle fetch request errors
       if (signal.aborted) {
