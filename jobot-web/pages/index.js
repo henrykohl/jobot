@@ -21,71 +21,71 @@ export default function Home() {
 
   const [res, setRes] = useState("");
 
-  const generate2 = async () => {
-    // Alert the user if no prompt value
-    if (!promptInput) {
-      alert("Please enter a prompt.");
-      return;
-    }
+  // const generate2 = async () => {
+  //   // Alert the user if no prompt value
+  //   if (!promptInput) {
+  //     alert("Please enter a prompt.");
+  //     return;
+  //   }
 
-    // Disable the generate button and enable the stop button
-    // generateBtn.disabled = true; (原方式)
-    // stopBtn.disabled = false; (原方式)
-    // resultText.innerText = "Generating..."; (原方式)
-    setIsDisable(false);
-    setRes("Generating...");
+  //   // Disable the generate button and enable the stop button
+  //   // generateBtn.disabled = true; (原方式)
+  //   // stopBtn.disabled = false; (原方式)
+  //   // resultText.innerText = "Generating..."; (原方式)
+  //   setIsDisable(false);
+  //   setRes("Generating...");
 
-    // Create a new AbortController instance
-    controller = new AbortController();
-    const signal = controller.signal;
+  //   // Create a new AbortController instance
+  //   controller = new AbortController();
+  //   const signal = controller.signal;
 
-    try {
-      const newMessage = { role: "user", content: promptInput };
+  //   try {
+  //     const newMessage = { role: "user", content: promptInput };
 
-      const newMessages = [...msgs, newMessage];
+  //     const newMessages = [...msgs, newMessage];
 
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: newMessages,
-          max_tokens: 1000,
-          // stream: true, // For streaming responses
-        }),
-        signal, // Pass the signal to the fetch request
-      });
+  //     const response = await fetch(API_URL, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${apiKey}`,
+  //       },
+  //       body: JSON.stringify({
+  //         model: "gpt-3.5-turbo",
+  //         messages: newMessages,
+  //         max_tokens: 1000,
+  //         // stream: true, // For streaming responses
+  //       }),
+  //       signal, // Pass the signal to the fetch request
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      const newBotMessage = data.choices[0].message;
+  //     const newBotMessage = data.choices[0].message;
 
-      const newMessages2 = [...newMessages, newBotMessage];
+  //     const newMessages2 = [...newMessages, newBotMessage];
 
-      setMsgs(newMessages2);
+  //     setMsgs(newMessages2);
 
-      setRes(newBotMessage.content);
-    } catch (error) {
-      // Handle fetch request errors
-      if (signal.aborted) {
-        // resultText.innerText = "Request aborted."; (原方式)
-        setRes("Request aborted.");
-      } else {
-        console.error("Error:", error);
-        // resultText.innerText = "Error occurred while generating."; (原方式)
-        setRes("Error occurred while generating.");
-      }
-    } finally {
-      // Enable the generate button and disable the stop button
-      // generateBtn.disabled = false; (原方式)
-      // stopBtn.disabled = true; (原方式)
-      setIsDisable(true);
-      controller = null; // Reset the AbortController instance
-    }
-  };
+  //     setRes(newBotMessage.content);
+  //   } catch (error) {
+  //     // Handle fetch request errors
+  //     if (signal.aborted) {
+  //       // resultText.innerText = "Request aborted."; (原方式)
+  //       setRes("Request aborted.");
+  //     } else {
+  //       console.error("Error:", error);
+  //       // resultText.innerText = "Error occurred while generating."; (原方式)
+  //       setRes("Error occurred while generating.");
+  //     }
+  //   } finally {
+  //     // Enable the generate button and disable the stop button
+  //     // generateBtn.disabled = false; (原方式)
+  //     // stopBtn.disabled = true; (原方式)
+  //     setIsDisable(true);
+  //     controller = null; // Reset the AbortController instance
+  //   }
+  // };
 
   const stop = () => {
     // Abort the fetch request by calling abort() on the AbortController instance
@@ -251,14 +251,14 @@ export default function Home() {
               Stop
             </button>
           </div>
-          <div class="flex justify-center mt-4">
+          {/* <div class="flex justify-center mt-4">
             <button
               class="w-1/2 px-4 py-2 rounded-md bg-black text-white hover:bg-gray-900 focus:outline-none mr-2 disabled:opacity-75 disabled:cursor-not-allowed"
               onClick={generate2}
             >
               TEST
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
