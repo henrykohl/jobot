@@ -54,11 +54,13 @@ export default function Home() {
           model: "gpt-3.5-turbo",
           messages: newMessages,
           max_tokens: 1000,
+          // stream: true, // For streaming responses
         }),
         signal, // Pass the signal to the fetch request
       });
 
       const data = await response.json();
+      console.log(">> ", data);
 
       const newBotMessage = data.choices[0].message;
 
