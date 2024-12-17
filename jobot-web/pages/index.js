@@ -238,7 +238,7 @@ export default function Home() {
               id="generateBtn"
               class="w-1/2 px-4 py-2 rounded-md bg-black text-white hover:bg-gray-900 focus:outline-none mr-2 disabled:opacity-75 disabled:cursor-not-allowed"
               disabled={!isDisable}
-              onClick={generate}
+              onClick={generate2}
             >
               Generate
             </button>
