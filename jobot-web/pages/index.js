@@ -21,7 +21,7 @@ export default function Home() {
 
   const [res, setRes] = useState("");
 
-  const generate = async () => {
+  const generate2 = async () => {
     // Alert the user if no prompt value
     if (!promptInput) {
       alert("Please enter a prompt.");
@@ -95,7 +95,7 @@ export default function Home() {
     }
   };
 
-  const generate2 = async () => {
+  const generate = async () => {
     // Alert the user if no prompt value
     if (!promptInput) {
       alert("Please enter a prompt.");
@@ -254,7 +254,7 @@ export default function Home() {
           <div class="flex justify-center mt-4">
             <button
               class="w-1/2 px-4 py-2 rounded-md bg-black text-white hover:bg-gray-900 focus:outline-none mr-2 disabled:opacity-75 disabled:cursor-not-allowed"
-              onClick={generate2}
+              onClick={generate}
             >
               TEST
             </button>
