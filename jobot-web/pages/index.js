@@ -82,12 +82,11 @@ export default function Home() {
 
       // eslint-disable-next-line
       while (true) {
-        // console.log("1>>");
         const { done, value } = await reader.read();
-        console.log("2>>", done);
+
         if (done) break;
         const text = new TextDecoder().decode(value);
-        console.log("text=", text);
+
         parser.feed(text);
       }
     } catch (error) {
@@ -95,6 +94,64 @@ export default function Home() {
       window.alert("Error:" + error.message);
     }
   };
+
+  async function tmsg() {
+    // fetch 在 Nodejs 18 里已经可用
+    const response = await fetch(
+      `https://key-rental-api.bowen.cool/openai/v1/chat/completions`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer <your_key>`,
+        },
+        method: "POST",
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          stream: true,
+          messages: [
+            { role: "user", content: "请帮我的白色宠物猫起一个有趣的名字" },
+          ],
+        }),
+      }
+    );
+
+    if (response.ok) {
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      const parser = createParser((event) => {
+        if (event.type === "event") {
+          if (event.data === "[DONE]") {
+            console.log(event.data);
+          } else {
+            try {
+              const json = JSON.parse(event.data);
+              const delta = json.choices[0]?.delta.content;
+              if (delta) {
+                console.log(delta);
+              }
+            } catch (error) {
+              console.error(error);
+              console.log(event.data);
+            }
+          }
+        }
+      });
+
+      while (true) {
+        const content = await reader?.read();
+        if (!content || !content.value) {
+          break;
+        }
+        const str = decoder.decode(content.value, { stream: true });
+        parser.feed(str);
+        if (content.done) {
+          break;
+        }
+      }
+    } else {
+      console.error("error", response.status, response.body);
+    }
+  }
 
   return (
     <>
@@ -147,6 +204,15 @@ export default function Home() {
               className="bg-blue-500 hover:bg-blue-600 border rounded-md text-white text-lg w-20 p-1 ml-2"
             >
               Send
+            </button>
+          </div>
+          <div class="flex justify-center mt-4">
+            <button
+              class="w-1/2 px-4 py-2 rounded-md bg-black text-white hover:bg-gray-900 focus:outline-none mr-2 disabled:opacity-75 disabled:cursor-not-allowed"
+              onClick={tmsg}
+              className="bg-blue-500 hover:bg-blue-600 border rounded-md text-white text-lg w-20 p-1 ml-2"
+            >
+              TEST
             </button>
           </div>
         </div>
