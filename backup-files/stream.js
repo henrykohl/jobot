@@ -54,7 +54,7 @@ export default function Home() {
           model: "gpt-3.5-turbo",
           messages: newMessages,
           max_tokens: 1000,
-          stream: true, // For streaming responses
+          stream: true, // For streaming responses (streaming reponse 一定要這麼設定 )
         }),
         signal, // Pass the signal to the fetch request
       });
