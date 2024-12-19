@@ -36,6 +36,7 @@ export default function Home() {
           "Content-Type": "application/json",
           Authorization: "Bearer " + apiKey,
           // Authorization: `Bearer ${apiKey}`,
+          // Authorization: `Bearer <your_key>`
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
@@ -96,29 +97,37 @@ export default function Home() {
   };
 
   async function tmsg() {
-    // fetch 在 Nodejs 18 里已经可用
-    const response = await fetch(
-      `https://key-rental-api.bowen.cool/openai/v1/chat/completions`,
+    const updatedMessages = [
+      ...messages,
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer <your_key>`,
-        },
-        method: "POST",
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          stream: true,
-          messages: [
-            { role: "user", content: "请帮我的白色宠物猫起一个有趣的名字" },
-          ],
-        }),
-      }
-    );
+        role: "user",
+        content: userMessage,
+      },
+    ];
 
+    setMessages(updatedMessages);
+    setUserMessage("");
+
+    const response = await fetch(API_URL, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + apiKey,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        stream: true,
+        messages: updatedMessages,
+        // messages: [{ role: "user", content: "请帮我的白色宠物猫起一个有趣的名字" },],
+      }),
+    });
+
+    console.log(">>", response.ok);
     if (response.ok) {
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
       const parser = createParser((event) => {
+        console.log("HERE");
         if (event.type === "event") {
           if (event.data === "[DONE]") {
             console.log(event.data);
@@ -144,6 +153,7 @@ export default function Home() {
           break;
         }
         const str = decoder.decode(content.value, { stream: true });
+        console.log(">>>", str);
         parser.feed(str);
         if (content.done) {
           break;
