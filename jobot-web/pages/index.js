@@ -137,6 +137,7 @@ export default function Home() {
         }
       });
 
+      /* eslint-disable no-constant-condition */
       while (true) {
         const content = await reader?.read();
         if (!content || !content.value) {
