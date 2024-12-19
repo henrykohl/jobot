@@ -7,6 +7,8 @@ An AI developed by Jovian using cutting edge ML APIs and models
 - [Episode 1 - First Contact with Jobot (How to Build an AI: The Chronicles of Jobot)](https://jovian.com/learn/how-to-build-an-ai/lesson/episode-1-first-contact-with-jobot)
   > [Github]()
 
+* 要執行時，將`./backup-files`中的要時執行的 **js**檔複製到 `./jobot-web/pages` 中，並改名為 `index.js`，與 Github 同步後，即可在 [vercel](https://vercel.com/tayuan-hsus-projects/jobot-dev) 執行此專案
+
 * 需要安裝
   > - 安裝 **Tailwind**
   >
@@ -49,3 +51,5 @@ An AI developed by Jovian using cutting edge ML APIs and models
 
 - `/backup-files/stream_output.txt`
   > 儲存了，使用 `/backup-files/stream.js` 運行，輸入 `Hey, how are you today?` 後，decoder.decode(value) 也就是 const chunk 的結果
+
+* `./backup-files/index_stream.js` 執行後沒有結果，原因在於`parser.feed()`根本不會執行

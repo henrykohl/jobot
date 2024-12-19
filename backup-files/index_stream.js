@@ -35,19 +35,12 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + apiKey,
+          // Authorization: `Bearer ${apiKey}`,
         },
-        // body: JSON.stringify({
-        //   model: "gpt-3.5-turbo",
-        //   messages: newMessages,
-        // }),
-        // method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json",
-        //   Authorization: `Bearer ${apiKey}`,
-        // },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
           messages: updatedMessages,
+          // messages: newMessages,
           stream: true,
         }),
       });
@@ -61,7 +54,6 @@ export default function Home() {
       // });
 
       const parser = createParser((event) => {
-        console.log("~~", event);
         if (event.type === "event") {
           const data = event.data;
           if (data === "[DONE]") {
@@ -69,7 +61,6 @@ export default function Home() {
           }
           const json = JSON.parse(event.data);
           const content = json.choices[0].delta.content;
-          console.log(">>", content);
           if (!content) {
             return;
           }
@@ -89,13 +80,12 @@ export default function Home() {
 
       // eslint-disable-next-line
       while (true) {
-        // console.log("1>>");
         const { done, value } = await reader.read();
-        console.log("2>>", done);
+
         if (done) break;
         const text = new TextDecoder().decode(value);
-        console.log("text=", text);
-        parser.feed();
+
+        parser.feed(text);
       }
     } catch (error) {
       console.error("error");

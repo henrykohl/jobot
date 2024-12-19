@@ -33,7 +33,7 @@ index_v2-7 1:25:00 (added margin: 找出 className="mt-3" 改成 className="my-3
 
 index_final 1:29:55 (add head)
 
-index_stream 1:35:25 (Bonus: Streaming the Message)
+index_stream 1:35:25 (Bonus: Streaming the Message--注意，執行後沒有結果，原因在於`parser.feed()`根本不會執行)
 輸入測試:
 Hey, please introduce yourself!
 how to find the largest element in a javascript array?
